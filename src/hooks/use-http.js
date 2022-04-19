@@ -1,10 +1,10 @@
-import {useState} from "react";
+import {useCallback, useState} from "react";
 
-const useHttp = (requestConfig, applyData) => { //requestConfig è un oggetto che contiene le configurazioni - applyData applica i dati
+const useHttp = () => { //requestConfig è un oggetto che contiene le configurazioni - applyData applica i dati
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const sendRequest = async () => {
+    const sendRequest = useCallback(async (requestConfig, applyData) => {
         setIsLoading(true);
         setError(null);
         try {
@@ -35,7 +35,7 @@ const useHttp = (requestConfig, applyData) => { //requestConfig è un oggetto ch
             setError(err.message || 'Something went wrong!');
         }
         setIsLoading(false);
-    };
+    }, []);
 
     return {
         isLoading,
